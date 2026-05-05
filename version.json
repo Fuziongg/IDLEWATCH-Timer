@@ -1,5 +1,5 @@
 {
-  "version": "1.2.2",
+  "version": "1.2.3",
   "url": "https://github.com/Fuziongg/IDLEWATCH/releases/latest/download/IDLEWATCH-Setup.exe",
-  "notes": "Auto-update sem precisar baixar manual"
+  "notes": "remoção do url do update"
 }
