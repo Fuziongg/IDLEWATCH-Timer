@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="IDLEWATCH — monitor inteligente de atividade para trabalho profundo. Detecta inatividade, bloqueia distrações e mostra exatamente para onde foi seu tempo.">
+<title>IDLEWATCH — Seu foco. Seu tempo.</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg:        #0e0f14;
+    --surface:   #161821;
+    --surface2:  #1f222e;
+    --border:    #2a2e3c;
+    --accent:    #6ee7a7;
+    --accent-d:  #3caa6e;
+    --text:      #e5e7eb;
+    --text-dim:  #9ca3af;
+    --text-mute: #6b7280;
+    --warn:      #fbbf24;
+  }
+
+  html, body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    scroll-behavior: smooth;
+  }
+
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+
+  /* ── Nav ─────────────────────────────────────────────────── */
+  nav {
+    padding: 24px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--border);
+  }
+  .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 18px; }
+  .brand span { color: var(--accent); }
+  .nav-links { display: flex; gap: 24px; }
+  .nav-links a { color: var(--text-dim); text-decoration: none; font-size: 14px; transition: color .2s; }
+  .nav-links a:hover { color: var(--text); }
+
+  /* ── Hero ─────────────────────────────────────────────────── */
+  .hero {
+    padding: 96px 0 64px;
+    text-align: center;
+  }
+  .hero .tag {
+    display: inline-block;
+    background: rgba(110, 231, 167, .1);
+    color: var(--accent);
+    padding: 6px 14px;
+    border-radius: 99px;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 24px;
+    border: 1px solid rgba(110, 231, 167, .2);
+  }
+  .hero h1 {
+    font-size: clamp(36px, 5vw, 56px);
+    line-height: 1.1;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin-bottom: 20px;
+    background: linear-gradient(180deg, #fff 0%, #aab 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .hero p.lead {
+    font-size: 18px;
+    color: var(--text-dim);
+    max-width: 640px;
+    margin: 0 auto 36px;
+  }
+
+  .cta-row { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 26px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 15px;
+    text-decoration: none;
+    border: 0;
+    cursor: pointer;
+    transition: transform .15s, opacity .15s;
+  }
+  .btn:hover { transform: translateY(-1px); }
+  .btn-primary { background: var(--accent); color: #0b0f0d; }
+  .btn-primary:hover { background: #87f0b8; }
+  .btn-ghost {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--border);
+  }
+  .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+  .btn small { color: rgba(11, 15, 13, .6); font-weight: 500; }
+
+  /* ── Section blocks ───────────────────────────────────────── */
+  section { padding: 72px 0; border-top: 1px solid var(--border); }
+  section h2 {
+    font-size: clamp(28px, 3.5vw, 38px);
+    font-weight: 700;
+    margin-bottom: 12px;
+    letter-spacing: -0.01em;
+  }
+  section .sub {
+    color: var(--text-dim);
+    font-size: 16px;
+    margin-bottom: 48px;
+    max-width: 640px;
+  }
+
+  /* ── Features ─────────────────────────────────────────────── */
+  .features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+  }
+  .feat {
+    background: var(--surface);
+    padding: 28px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    transition: border-color .2s;
+  }
+  .feat:hover { border-color: var(--accent-d); }
+  .feat .ico { font-size: 28px; margin-bottom: 14px; }
+  .feat h3 { font-size: 17px; margin-bottom: 8px; }
+  .feat p { color: var(--text-dim); font-size: 14px; }
+
+  /* ── Pricing ──────────────────────────────────────────────── */
+  .pricing {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 24px;
+    max-width: 760px;
+    margin: 0 auto;
+  }
+  .plan {
+    background: var(--surface);
+    padding: 32px;
+    border-radius: 14px;
+    border: 1px solid var(--border);
+    position: relative;
+  }
+  .plan.pro {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 4px rgba(110, 231, 167, .06);
+  }
+  .plan.pro::before {
+    content: "RECOMENDADO";
+    position: absolute;
+    top: -10px;
+    right: 24px;
+    background: var(--accent);
+    color: #0b0f0d;
+    padding: 3px 10px;
+    border-radius: 4px;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+  }
+  .plan h3 { font-size: 22px; margin-bottom: 8px; }
+  .plan .price {
+    font-size: 36px;
+    font-weight: 800;
+    margin-bottom: 4px;
+  }
+  .plan .price small {
+    font-size: 14px;
+    color: var(--text-dim);
+    font-weight: 400;
+  }
+  .plan p.tagline { color: var(--text-dim); font-size: 14px; margin-bottom: 24px; }
+  .plan ul {
+    list-style: none;
+    margin-bottom: 28px;
+  }
+  .plan li {
+    padding: 8px 0;
+    color: var(--text);
+    font-size: 14px;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .plan li::before {
+    content: "✓";
+    color: var(--accent);
+    font-weight: 800;
+    flex-shrink: 0;
+  }
+  .plan li.no::before { content: "—"; color: var(--text-mute); }
+  .plan li.no { color: var(--text-mute); }
+  .plan .btn { width: 100%; justify-content: center; }
+
+  /* ── FAQ ──────────────────────────────────────────────────── */
+  .faq { max-width: 720px; margin: 0 auto; }
+  .q {
+    border-top: 1px solid var(--border);
+    padding: 20px 0;
+  }
+  .q:last-child { border-bottom: 1px solid var(--border); }
+  .q summary {
+    cursor: pointer;
+    list-style: none;
+    font-weight: 600;
+    font-size: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .q summary::-webkit-details-marker { display: none; }
+  .q summary::after {
+    content: "+";
+    color: var(--accent);
+    font-size: 22px;
+    font-weight: 300;
+    transition: transform .2s;
+  }
+  .q[open] summary::after { content: "−"; }
+  .q p {
+    margin-top: 12px;
+    color: var(--text-dim);
+    font-size: 14px;
+    line-height: 1.7;
+  }
+
+  /* ── Footer ───────────────────────────────────────────────── */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 48px 0;
+    text-align: center;
+    color: var(--text-mute);
+    font-size: 13px;
+  }
+  footer a { color: var(--text-dim); text-decoration: none; }
+  footer a:hover { color: var(--accent); }
+
+  /* ── Mobile ──────────────────────────────────────────────── */
+  @media (max-width: 600px) {
+    nav { flex-direction: column; gap: 16px; padding: 20px 0; }
+    .nav-links { gap: 18px; font-size: 13px; }
+    .hero { padding: 56px 0 48px; }
+    .cta-row .btn { width: 100%; justify-content: center; }
+    section { padding: 56px 0; }
+    .plan { padding: 26px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <nav>
+    <div class="brand">⏱ IDLE<span>WATCH</span></div>
+    <div class="nav-links">
+      <a href="#features">Recursos</a>
+      <a href="#pricing">Preços</a>
+      <a href="#faq">Dúvidas</a>
+    </div>
+  </nav>
+</div>
+
+<!-- ── HERO ─────────────────────────────────────────────────── -->
+<header class="hero">
+  <div class="wrap">
+    <span class="tag">⚡ Para quem leva foco a sério</span>
+    <h1>Seu tempo de trabalho,<br>medido com honestidade.</h1>
+    <p class="lead">
+      IDLEWATCH detecta automaticamente quando você está focado, ocioso ou
+      navegando em algo que não devia. Bloqueia distrações, mostra relatórios
+      reais e trata seu foco como o ativo escasso que é.
+    </p>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="#pricing">
+        Assinar Pro <small>· R$ 19,90/mês</small>
+      </a>
+      <!-- TODO: trocar pelo link de release do GitHub -->
+      <a class="btn btn-ghost" href="https://github.com/joaovliberato/idlewatch/releases/latest">
+        Baixar grátis (versão Free)
+      </a>
+    </div>
+  </div>
+</header>
+
+<!-- ── FEATURES ─────────────────────────────────────────────── -->
+<section id="features">
+  <div class="wrap">
+    <h2>O que ele faz</h2>
+    <p class="sub">
+      Mais que um cronômetro. Um sistema que pensa por você quando o foco escapa.
+    </p>
+
+    <div class="features">
+      <div class="feat">
+        <div class="ico">⏱</div>
+        <h3>Cronômetro de sessão</h3>
+        <p>Sessões inteligentes com detecção automática de pausas, retomada após
+        crash, integração com Pomodoro e overlay sempre visível.</p>
+      </div>
+
+      <div class="feat">
+        <div class="ico">💤</div>
+        <h3>Detecção de inatividade</h3>
+        <p>O timer pausa sozinho quando você sai do PC e retoma quando volta.
+        Sem cronômetro inflado, sem auto-engano.</p>
+      </div>
+
+      <div class="feat">
+        <div class="ico">🚫</div>
+        <h3>Bloqueador de distrações</h3>
+        <p>Define apps e sites que viram OCIOSO automaticamente quando você
+        abre durante uma sessão. Foco Extremo: lockdown total no que importa.</p>
+      </div>
+
+      <div class="feat">
+        <div class="ico">📊</div>
+        <h3>Relatórios honestos</h3>
+        <p>Veja exatamente onde foi seu tempo: por dia, por app, por projeto.
+        Gráficos de evolução, comparações, ranking de distrações.</p>
+      </div>
+
+      <div class="feat">
+        <div class="ico">🏷</div>
+        <h3>Projetos e tags</h3>
+        <p>Liga sessões a projetos ou clientes. No fim do mês, você sabe
+        quanto trabalhou em cada um sem nenhum esforço manual.</p>
+      </div>
+
+      <div class="feat">
+        <div class="ico">🏆</div>
+        <h3>Conquistas e metas</h3>
+        <p>Metas diárias/semanais/mensais com streaks. Conquistas que premiam
+        consistência, não apenas horas. Mascote te ajuda a manter o ritmo.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── PRICING ──────────────────────────────────────────────── -->
+<section id="pricing">
+  <div class="wrap">
+    <h2>Planos</h2>
+    <p class="sub">
+      Comece grátis. Quando precisar dos relatórios e do bloqueador, vira Pro
+      por menos do que um café por semana.
+    </p>
+
+    <div class="pricing">
+      <div class="plan">
+        <h3>Free</h3>
+        <div class="price">R$ 0<small> /sempre</small></div>
+        <p class="tagline">Pra quem só quer o cronômetro funcionando.</p>
+        <ul>
+          <li>Cronômetro + Pomodoro</li>
+          <li>Detecção automática de inatividade</li>
+          <li>Tray, atalhos globais, mascote</li>
+          <li>Conquistas e metas</li>
+          <li>Até 5 projetos / tags</li>
+          <li class="no">Sem retomada após crash</li>
+          <li class="no">Sem relatórios e insights</li>
+          <li class="no">Sem bloqueador de distrações</li>
+        </ul>
+        <!-- TODO: trocar pelo link de release do GitHub -->
+        <a class="btn btn-ghost" href="https://github.com/joaovliberato/idlewatch/releases/latest">
+          Baixar grátis
+        </a>
+      </div>
+
+      <div class="plan pro">
+        <h3>Pro</h3>
+        <div class="price">R$ 19,90<small> /mês</small></div>
+        <p class="tagline">Tudo liberado. 7 dias grátis pra testar.</p>
+        <ul>
+          <li>Tudo do Free, sem limite</li>
+          <li>Retomada inteligente após crash</li>
+          <li>Relatórios completos e gráficos</li>
+          <li>Insights e tendências</li>
+          <li>Bloqueador de distrações</li>
+          <li>Foco Extremo (lockdown radical)</li>
+          <li>Projetos / tags ilimitados</li>
+          <li>Histórico ilimitado</li>
+        </ul>
+        <!-- TODO: trocar pelo link de checkout do Kiwify -->
+        <a class="btn btn-primary" href="https://kiwify.com.br">
+          Assinar Pro
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FAQ ──────────────────────────────────────────────────── -->
+<section id="faq">
+  <div class="wrap">
+    <h2>Dúvidas comuns</h2>
+    <p class="sub">As respostas pras 7 perguntas mais frequentes.</p>
+
+    <div class="faq">
+
+      <details class="q">
+        <summary>Como funciona o trial de 7 dias?</summary>
+        <p>Quando você instala o IDLEWATCH pela primeira vez, ganha automaticamente
+        7 dias com TODAS as features Pro liberadas. Não precisa cadastrar cartão
+        nem nada. Quando o trial acaba, o app continua funcionando no plano Free —
+        você só perde acesso aos relatórios, insights, bloqueador e algumas outras
+        features avançadas.</p>
+      </details>
+
+      <details class="q">
+        <summary>Posso cancelar quando quiser?</summary>
+        <p>Sim, sem multa. Se cancelar no meio do mês, você continua com acesso
+        Pro até a data da próxima cobrança e depois cai pro Free automaticamente.
+        Seus dados nunca são apagados — você só perde acesso às features Pro.</p>
+      </details>
+
+      <details class="q">
+        <summary>Funciona em Mac ou Linux?</summary>
+        <p>Hoje só Windows (10 e 11). Mac e Linux estão no roadmap, mas sem
+        data definida. Se isso é importante pra você, manda email — feedback
+        de usuário pesa na priorização.</p>
+      </details>
+
+      <details class="q">
+        <summary>Meus dados ficam onde?</summary>
+        <p>Tudo no seu PC. As sessões, projetos, configurações e estatísticas
+        moram em <code>%LOCALAPPDATA%/IDLEWATCH/</code> e nunca saem da sua máquina.
+        A única coisa que vai pro servidor é a validação da licença (uma vez por
+        dia, basicamente).</p>
+      </details>
+
+      <details class="q">
+        <summary>Em quantos PCs posso usar a mesma chave?</summary>
+        <p>Em até 2 dispositivos simultâneos por chave Pro. Se você troca de
+        notebook ou formata um dos PCs, dá pra "deslogar" no antigo e ativar
+        no novo sem perder nada. Em mais de 2, a ativação é negada — aí basta
+        liberar um dos slots em Configurações → Sua conta → Sair desta licença.</p>
+      </details>
+
+      <details class="q">
+        <summary>Como recebo a chave depois de comprar?</summary>
+        <p>Assim que o pagamento confirma, você recebe a chave por email
+        automaticamente. É só abrir o IDLEWATCH, ir em Configurações →
+        Sua conta, colar a chave e clicar em Ativar.</p>
+      </details>
+
+      <details class="q">
+        <summary>É seguro pagar?</summary>
+        <p>O processamento é feito pelo Kiwify, plataforma brasileira regulada
+        com criptografia de ponta. Aceita cartão de crédito (recorrente),
+        PIX e boleto. Os dados do cartão nunca passam pelo IDLEWATCH —
+        ficam direto na infraestrutura do Kiwify.</p>
+      </details>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── Footer ───────────────────────────────────────────────── -->
+<footer>
+  <div class="wrap">
+    <p>© 2026 IDLEWATCH. Feito por
+      <!-- TODO: substituir pelo seu site/contato real -->
+      <a href="mailto:contato@idlewatch.com">Liberato Produtora</a>.
+    </p>
+    <p style="margin-top:8px;">
+      Suporte:
+      <a href="mailto:contato@idlewatch.com">contato@idlewatch.com</a>
+      ·
+      <a href="https://github.com/joaovliberato/idlewatch">GitHub</a>
+    </p>
+  </div>
+</footer>
+
+</body>
+</html>
