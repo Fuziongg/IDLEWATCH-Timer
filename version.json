@@ -1,21 +1,5 @@
 {
   "version": "1.0.2",
   "url": "https://github.com/Fuziongg/IDLEWATCH-Timer/releases/latest/download/IDLEWATCH-Setup.exe",
-  "notes": "## ✨ Novo
-- Tour guiado em Configurações e Relatórios na primeira vez
-- 21 mini-tours por página (botão 💡 em cada uma)
-- Tema "Café com leite" (claro), troca ao vivo sem reiniciar
-- Busca avançada nas Configurações com toggle inline
-- "Gerenciar dispositivos" no painel de conta (libera slot remoto)
-
-## 🐛 Bugs corrigidos
-- Sessões em Relatórios sempre mostram Continuar/Apagar
-- Sessões crashed agora podem ser retomadas
-- Export PNG não trava mais nas abas Apps/Projetos/Sessões
-- Cronômetro respeita troca de tema
-
-## 🔧 Backend
-- Endpoints novos: /list-devices, /release-device
-- Rate limit em /trial
-- Suporte a plano Lifetime (preparado pra quando ativar no Kiwify)!"
+  "notes": "Muita coisa nova, tema, tours e correções!"
 }
