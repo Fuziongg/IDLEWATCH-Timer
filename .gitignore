@@ -1,0 +1,14 @@
+# Binários de release não vivem no repo — vão como assets dos
+# GitHub Releases (limite 2GB/asset vs 100MB no git).
+# O auto-update do app pega via `version.json.url` que aponta pra
+# releases/latest/download/IDLEWATCH-Setup.exe — então o repo
+# pode ficar leve.
+*.exe
+*.zip
+*.msi
+
+# IDE / OS junk
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
