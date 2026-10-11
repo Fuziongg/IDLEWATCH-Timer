@@ -1,5 +1,5 @@
 {
-  "version": "1.0.9",
+  "version": "1.0.11",
   "url": "https://github.com/Fuziongg/IDLEWATCH-Timer/releases/latest/download/IDLEWATCH-Setup.exe",
-  "notes": "Modo Gelo/Vela (cronômetro vira cubo derretendo ou vela apagando, clique na vela apaga/acende pra pausar), tela única de início, Configurações reorganizadas com página Início e atalhos."
+  "notes": "Tradução EN 100% completa: cronômetro (INICIAR/ENCERRAR), atalhos de teclado, todas as páginas de Configurações (Cowork, Tags, Perfis, Categorias, Metas, Conta, etc), relatórios e todos os modais. Trocar em Configurações → Idioma. Installer/Uninstaller bilíngues inline. Correções: janela de Tarefas e editor de tags da sessão voltaram a abrir. Instalador mais leve (77 MB)."
 }
