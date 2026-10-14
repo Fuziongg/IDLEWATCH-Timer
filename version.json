@@ -1,5 +1,7 @@
 {
-  "version": "1.0.11",
-  "url": "https://github.com/Fuziongg/IDLEWATCH-Timer/releases/latest/download/IDLEWATCH-Setup.exe",
-  "notes": "Tradução EN 100% completa: cronômetro (INICIAR/ENCERRAR), atalhos de teclado, todas as páginas de Configurações (Cowork, Tags, Perfis, Categorias, Metas, Conta, etc), relatórios e todos os modais. Trocar em Configurações → Idioma. Installer/Uninstaller bilíngues inline. Correções: janela de Tarefas e editor de tags da sessão voltaram a abrir. Instalador mais leve (77 MB)."
+  "version": "1.1.0",
+  "url": "https://github.com/Fuziongg/IDLEWATCH-Timer/releases/download/v1.1.0/IDLEWATCH-Setup.exe",
+  "sha256": "3cd821cc2a87d597b5eb2bbe96fd2833ca1b734c7f42ab7e790339606fddb598",
+  "size": 39137059,
+  "notes": "Configurações e Relatórios abrem muito mais rápido. Visual novo no app inteiro e menu da bandeja redesenhado. A sequência agora conta o dia a partir de 25 min de foco, e as Conquistas ganharam lugar nos Relatórios. Instalador com metade do tamanho e atualização conferida antes de instalar (se algo der errado, a versão anterior volta sozinha). Abrir o IDLEWATCH de novo traz o cronômetro pra frente. Aviso: sabemos que o Cowork não está funcionando; ele volta em breve, funcionando e repaginado."
 }
